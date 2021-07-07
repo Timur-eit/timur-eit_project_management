@@ -10,18 +10,6 @@ app.use(express.urlencoded({
 
 app.use(express.json())
 
-// app.get('/numbers', async (req, res) => {
-//   const {rows} = await DBConnection.query({text: 'SELECT * FROM projects'})
-//
-//   res.status(200).send(rows)
-// })
-//
-// app.post('/numbers', async(req, res) => { // route
-//   const {body: {name, code}} = req // controller
-//   const {rows} = await DBConnection.query({text: 'INSERT INTO projects (name, code) VALUES ($1, $2) RETURNING *'}, [name, code]) // model
-//   res.send(rows) // controller
-// })
-
 app.use('/projects', projectRouter)
 
 app.listen(port, () => {
