@@ -1,18 +1,23 @@
-const express = require('express')
+import * as express from 'express'
 const router = express.Router()
 const DBConnection = require('../../database')
 
 // interface IBody {
-//   readonly id: number,
 //   name: string,
 //   code: string,
+//   id?: number
 // }
 
 interface IQueryText {
-  text: string
+  text: string,
+  rowMode?: string,
+  values?: [string, string, number?],
+  types?: {
+    getTypeParser: () => any,
+  }
 }
 
-router.post('/', async(req, res) => { // route
+router.post('/', async(req: express.Request, res: express.Response) => { // route
   const {body: {name, code}} = req // controller
   const queryText: IQueryText = {text: 'INSERT INTO projects (name, code) VALUES ($1, $2) RETURNING *'}
   const {rows} = await DBConnection.query(queryText, [name, code]) // model
