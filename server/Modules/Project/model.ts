@@ -46,7 +46,17 @@ const removeProject = async (id) => ({status: 200, data: await DBConnection.quer
 const readProjectById = async (id, field) => ({status: 200, data: await DBConnection.query(sqlSelectProjectById(field), [id])})
 
 
-module.exports = {
+// module.exports = {
+//   createProject,
+//   readAllProjects,
+//   updateProject,
+//   removeProject,
+//   readProjectById
+// }
+
+// ! Cannot redeclare block scoped variable (typescript)
+
+export  {
   createProject,
   readAllProjects,
   updateProject,

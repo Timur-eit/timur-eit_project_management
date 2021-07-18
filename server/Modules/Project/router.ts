@@ -6,7 +6,7 @@ interface IPath {
   [property: string]: string
 }
 
-const path = {
+const path: IPath = {
   root: '/',
   id: '/:id/',
 }
