@@ -5,3 +5,4 @@ module.exports = (function () {
     myClient.connect();
     return myClient;
 })();
+//# sourceMappingURL=database.js.map

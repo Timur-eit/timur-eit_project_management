@@ -3,11 +3,12 @@ var _a = require('./controller'), projectDelete = _a.projectDelete, projectCreat
 var router = express.Router();
 var path = {
     root: '/',
-    id: '/:id/'
+    id: '/:id/',
 };
 router.post(path.root, projectCreate);
 router.get(path.root, projectList);
 router.get(path.id, getProject);
 router.put(path.root, projectUpdate);
-router["delete"](path.root, projectDelete);
+router.delete(path.root, projectDelete);
 module.exports = router;
+//# sourceMappingURL=router.js.map

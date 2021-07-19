@@ -1,9 +1,13 @@
-export {}
-const express = require('express')
+/**
+ * import instead of require to separate module's scope
+ * https://stackoverflow.com/questions/35758584/cannot-redeclare-block-scoped-variable-typescript
+ * https://www.typescriptlang.org/tsconfig#esModuleInterop
+ */
+import express from 'express'
 const {port} = require('./constants')
 const projectRouter = require('./Modules/Project/router')
 
-const app = express()
+const app: express.Application = express()
 
 app.use(express.urlencoded({
   extended: true
