@@ -20,4 +20,17 @@ sleep 5;
 
 # create the db
 echo "CREATE DATABASE $DB ENCODING 'UTF-8';" | docker exec -i $SERVER psql -U $USERNAME
+echo "DROP TABLE public.projects;" | docker exec -i $SERVER psql -U $USERNAME
+
+echo "CREATE TABLE public.projects(
+    name character varying(255) COLLATE pg_catalog.'default' NOT NULL,
+    code character varying(255) COLLATE pg_catalog.'default' NOT NULL,
+    id integer NOT NULL DEFAULT nextval('public.projects_id_seq'::regclass),
+    CONSTRAINT projects_pkey PRIMARY KEY (id)
+)" | docker exec -i $SERVER psql -U $USERNAME
+
+echo "TABLESPACE pg_default; " | docker exec -i $SERVER psql -U $USERNAME
+
+echo "ALTER TABLE public.projects OWNER to postgres;" | docker exec -i $SERVER psql -U $USERNAME
+
 echo "\l" | docker exec -i $SERVER psql -U $USERNAME

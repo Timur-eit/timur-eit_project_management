@@ -1,48 +1,21 @@
-import * as express from 'express'
+const express = require('express')
+const {projectDelete, projectCreate, projectUpdate, projectList, getProject} = require('./controller')
+
 const router = express.Router()
-const DBConnection = require('../../database')
 
-// interface IBody {
-//   name: string,
-//   code: string,
-//   id?: number
-// }
-
-interface IQueryText {
-  text: string,
-  rowMode?: string,
-  values?: [string, string, number?],
-  types?: {
-    getTypeParser: () => any,
-  }
+interface IPath {
+  [property: string]: string
 }
 
-router.post('/', async(req: express.Request, res: express.Response) => { // route
-  const {body: {name, code}} = req // controller
-  const queryText: IQueryText = {text: 'INSERT INTO projects (name, code) VALUES ($1, $2) RETURNING *'}
-  const {rows} = await DBConnection.query(queryText, [name, code]) // model
-  res.send(rows) // controller
-})
+const path: IPath = {
+  root: '/',
+  id: '/:id/',
+}
 
-router.get('/', async (req, res) => {
-  const queryText: IQueryText = {text: 'SELECT * FROM projects'}
-  const {rows} = await DBConnection.query(queryText)
-  res.status(200).send(rows)
-})
-
-router.put('/', async (req, res) => {
-  const {body: {name, code, id}} = req
-  const queryText: IQueryText = {text: 'UPDATE projects SET name = $1, code = $2 WHERE id = $3'}
-  const {rows} = await DBConnection.query(queryText, [name, code, id])
-  res.status(200).send(rows)
-})
-
-router.delete('/', async (req, res) => {
-  const {body: {id}} = req
-  const queryText: IQueryText = {text: 'DELETE FROM projects WHERE id = $1'}
-  await DBConnection.query(queryText, [id])
-  res.status(200).send("success")
-})
-
+router.post(path.root, projectCreate)
+router.get(path.root, projectList)
+router.get(path.id, getProject)
+router.put(path.root, projectUpdate)
+router.delete(path.root, projectDelete)
 
 module.exports = router

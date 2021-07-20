@@ -1,4 +1,4 @@
-var constants = {
+const constants = {
     port: 8000,
     pgSettings: {
         user: 'postgres',
@@ -9,3 +9,4 @@ var constants = {
     }
 };
 module.exports = constants;
+//# sourceMappingURL=constants.js.map
