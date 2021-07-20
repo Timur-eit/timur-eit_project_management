@@ -4,8 +4,8 @@
  * https://www.typescriptlang.org/tsconfig#esModuleInterop
  */
 import express from 'express'
-const {port} = require('./constants')
-const projectRouter = require('./Modules/Project/router')
+import constants from './constants'
+import projectRouter from './Modules/Project/router'
 
 const app: express.Application = express()
 
@@ -17,7 +17,7 @@ app.use(express.json())
 
 app.use('/projects', projectRouter)
 
-app.listen(port, () => {
+app.listen(constants.port, () => {
   const date = new Date()
-  console.log(`Server has been loaded on ${port} port at ${date}`)
+  console.log(`Server has been loaded on ${constants.port} port at ${date}`)
 })

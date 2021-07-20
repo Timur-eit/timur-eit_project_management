@@ -1,13 +1,8 @@
-const {pgSettings} = require('./constants')
-const {Client} = require('pg')
+import constants from './constants'
+import * as pg from 'pg'
 
-interface IClient {
-  connect: () => void
-}
-
-module.exports = (() => {
-  const myClient: IClient = new Client(pgSettings)
-  myClient.connect()
-  return myClient
+export default (() => {
+    const myClient = new pg.Client(constants.pgSettings)
+    myClient.connect()
+    return myClient
 })()
-

@@ -8,9 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.readProjectById = exports.removeProject = exports.updateProject = exports.readAllProjects = exports.createProject = void 0;
-const DBConnection = require('../../database');
+const database_1 = __importDefault(require("../../database"));
 const sqlCreateProject = { text: 'INSERT INTO projects (name, code) VALUES ($1::text, $2::text) RETURNING id::integer, name::text, code::text' };
 const sqlSelectProjectList = { text: 'SELECT * FROM projects' };
 const sqlUpdateProject = { text: 'UPDATE projects SET name = $1, code = $2 WHERE id = $3' };
@@ -18,29 +21,29 @@ const sqlDeleteProject = { text: 'DELETE FROM projects WHERE id = $1' };
 const sqlSelectProjectById = (field) => ({ text: `SELECT ${field} FROM projects WHERE id = $1` });
 const sqlSelectProjectByCode = { text: 'SELECT * FROM projects WHERE code = $1' };
 const createProject = (name, code) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield DBConnection.query(sqlSelectProjectByCode, [code]);
+    const data = yield database_1.default.query(sqlSelectProjectByCode, [code]);
     const { rows } = data;
     if (rows.length) {
         return { status: 400, data: { rows: 'project code already exist' } };
     }
-    return { status: 200, data: yield DBConnection.query(sqlCreateProject, [name, code]) };
+    return { status: 200, data: yield database_1.default.query(sqlCreateProject, [name, code]) };
 });
 exports.createProject = createProject;
 const readAllProjects = () => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield DBConnection.query(sqlSelectProjectList);
+    const data = yield database_1.default.query(sqlSelectProjectList);
     return { status: 200, data };
 });
 exports.readAllProjects = readAllProjects;
 const updateProject = (name, code, id) => __awaiter(void 0, void 0, void 0, function* () {
-    return { status: 200, data: yield DBConnection.query(sqlUpdateProject, [name, code, id]) };
+    return { status: 200, data: yield database_1.default.query(sqlUpdateProject, [name, code, id]) };
 });
 exports.updateProject = updateProject;
 const removeProject = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    return { status: 200, data: yield DBConnection.query(sqlDeleteProject, [id]) };
+    return { status: 200, data: yield database_1.default.query(sqlDeleteProject, [id]) };
 });
 exports.removeProject = removeProject;
 const readProjectById = (id, field) => __awaiter(void 0, void 0, void 0, function* () {
-    return { status: 200, data: yield DBConnection.query(sqlSelectProjectById(field), [id]) };
+    return { status: 200, data: yield database_1.default.query(sqlSelectProjectById(field), [id]) };
 });
 exports.readProjectById = readProjectById;
 //# sourceMappingURL=model.js.map

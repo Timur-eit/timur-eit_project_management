@@ -9,16 +9,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * https://www.typescriptlang.org/tsconfig#esModuleInterop
  */
 const express_1 = __importDefault(require("express"));
-const { port } = require('./constants');
-const projectRouter = require('./Modules/Project/router');
+const constants_1 = __importDefault(require("./constants"));
+const router_1 = __importDefault(require("./Modules/Project/router"));
 const app = express_1.default();
 app.use(express_1.default.urlencoded({
     extended: true
 }));
 app.use(express_1.default.json());
-app.use('/projects', projectRouter);
-app.listen(port, () => {
+app.use('/projects', router_1.default);
+app.listen(constants_1.default.port, () => {
     const date = new Date();
-    console.log(`Server has been loaded on ${port} port at ${date}`);
+    console.log(`Server has been loaded on ${constants_1.default.port} port at ${date}`);
 });
 //# sourceMappingURL=index.js.map

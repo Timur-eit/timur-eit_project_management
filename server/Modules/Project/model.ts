@@ -1,6 +1,5 @@
 import {IDBQueryConfig, IDataModel, IModel} from '../interfaces'
-
-const DBConnection = require('../../database')
+import DBConnection from '../../database'
 
 const sqlCreateProject: IDBQueryConfig = {text: 'INSERT INTO projects (name, code) VALUES ($1::text, $2::text) RETURNING id::integer, name::text, code::text'}
 const sqlSelectProjectList: IDBQueryConfig = {text: 'SELECT * FROM projects'}
@@ -45,7 +44,6 @@ const removeProject = async (id: string): Promise<IModel> => {
 const readProjectById = async (id: string, field: string): Promise<IModel> => {
   return {status: 200, data: await DBConnection.query(sqlSelectProjectById(field), [id])}
 }
-
 
 /**
  * 49 line - express types error

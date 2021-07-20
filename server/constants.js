@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const constants = {
     port: 8000,
     pgSettings: {
@@ -8,5 +10,5 @@ const constants = {
         port: 5432
     }
 };
-module.exports = constants;
+exports.default = constants;
 //# sourceMappingURL=constants.js.map

@@ -1,5 +1,5 @@
-const express = require('express')
-const {projectDelete, projectCreate, projectUpdate, projectList, getProject} = require('./controller')
+import * as express from 'express'
+import {projectDelete, projectCreate, projectUpdate, projectList, getProject} from './controller'
 
 const router = express.Router()
 
@@ -18,4 +18,7 @@ router.get(path.id, getProject)
 router.put(path.root, projectUpdate)
 router.delete(path.root, projectDelete)
 
-module.exports = router
+export default router
+
+
+// module.exports = router

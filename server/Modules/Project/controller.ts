@@ -37,7 +37,7 @@ const getProject: ProjectController = async (req, res) => {
   // const {params: {id}, query: {field}} = req
   const id = req.params.id
   const field = typeof req.query.field === "string" ? req.query.field : undefined;
-  const {status, data: {rows}} = await readProjectById(id, field) // express types error - see below 
+  const {status, data: {rows}} = await readProjectById(id, field) // express types error - see below
   res.status(status).send(rows)
 }
 

@@ -20,4 +20,4 @@ const constants: IConstants = {
   }
 }
 
-module.exports = constants
+export default constants
