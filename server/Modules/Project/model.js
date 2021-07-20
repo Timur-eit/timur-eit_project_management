@@ -18,7 +18,7 @@ const sqlCreateProject = { text: 'INSERT INTO projects (name, code) VALUES ($1::
 const sqlSelectProjectList = { text: 'SELECT * FROM projects' };
 const sqlUpdateProject = { text: 'UPDATE projects SET name = $1, code = $2 WHERE id = $3' };
 const sqlDeleteProject = { text: 'DELETE FROM projects WHERE id = $1' };
-const sqlSelectProjectById = (field) => ({ text: `SELECT ${field} FROM projects WHERE id = $1` });
+const sqlSelectProjectById = (id) => ({ text: `SELECT * FROM projects WHERE id = ${id}` });
 const sqlSelectProjectByCode = { text: 'SELECT * FROM projects WHERE code = $1' };
 const createProject = (name, code) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield database_1.default.query(sqlSelectProjectByCode, [code]);
@@ -42,8 +42,8 @@ const removeProject = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return { status: 200, data: yield database_1.default.query(sqlDeleteProject, [id]) };
 });
 exports.removeProject = removeProject;
-const readProjectById = (id, field) => __awaiter(void 0, void 0, void 0, function* () {
-    return { status: 200, data: yield database_1.default.query(sqlSelectProjectById(field), [id]) };
+const readProjectById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    return { status: 200, data: yield database_1.default.query(sqlSelectProjectById(id)) };
 });
 exports.readProjectById = readProjectById;
 //# sourceMappingURL=model.js.map

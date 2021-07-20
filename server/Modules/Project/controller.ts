@@ -33,23 +33,12 @@ const projectDelete: ProjectController = async (req, res) => {
   res.status(status).send("success")
 }
 
-const getProject: ProjectController = async (req, res) => {
-  // const {params: {id}, query: {field}} = req
-  const id = req.params.id
-  const field = typeof req.query.field === "string" ? req.query.field : undefined;
-  const {status, data: {rows}} = await readProjectById(id, field) // express types error - see below
+const getProject: ProjectController = async (req, res) => {  
+  const id = req.params.id  
+  const {status, data: {rows}} = await readProjectById(id)
   res.status(status).send(rows)
 }
 
-/** 
- * validation
- * const q = typeof req.query.q === "string" ? req.query.q : undefined;
- * https://github.com/DefinitelyTyped/DefinitelyTyped/pull/43434#issuecomment-607181516
- */
-
-
-// module.exports = {
-// ! Cannot redeclare block scoped variable (typescript)
 export {
   projectDelete,
   projectCreate,

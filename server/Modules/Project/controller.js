@@ -36,10 +36,8 @@ const projectDelete = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.projectDelete = projectDelete;
 const getProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // const {params: {id}, query: {field}} = req
     const id = req.params.id;
-    const field = typeof req.query.field === "string" ? req.query.field : undefined;
-    const { status, data: { rows } } = yield model_1.readProjectById(id, field); // express types error - see below
+    const { status, data: { rows } } = yield model_1.readProjectById(id);
     res.status(status).send(rows);
 });
 exports.getProject = getProject;
