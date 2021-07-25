@@ -14,31 +14,31 @@ const model_1 = require("./model");
 const projectCreate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const reqBody = req.body;
     const { name, code } = reqBody; // controller
-    const { status, data: { rows } } = yield model_1.createProject(name, code); // model
-    res.status(status).send(rows); // controller
+    const { statusCode, data: { rows } } = yield model_1.createProject(name, code); // model
+    res.status(statusCode).send(rows); // controller
 });
 exports.projectCreate = projectCreate;
 const projectList = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { status, data: { rows } } = yield model_1.readAllProjects();
-    res.status(status).send(rows);
+    const { statusCode, data: { rows } } = yield model_1.readAllProjects();
+    res.status(statusCode).send(rows);
 });
 exports.projectList = projectList;
 const projectUpdate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body: { name, code, id } } = req;
-    const { status, data: { rows } } = yield model_1.updateProject(name, code, id);
-    res.status(status).send(rows);
+    const { statusCode, data: { rows } } = yield model_1.updateProject(name, code, id);
+    res.status(statusCode).send(rows);
 });
 exports.projectUpdate = projectUpdate;
 const projectDelete = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body: { id } } = req;
-    const { status } = yield model_1.removeProject(id);
-    res.status(status).send("success");
+    const { statusCode } = yield model_1.removeProject(id);
+    res.status(statusCode).send("success");
 });
 exports.projectDelete = projectDelete;
 const getProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
-    const { status, data: { rows } } = yield model_1.readProjectById(id);
-    res.status(status).send(rows);
+    const { statusCode, data: { rows } } = yield model_1.readProjectById(id);
+    res.status(statusCode).send(rows);
 });
 exports.getProject = getProject;
 //# sourceMappingURL=controller.js.map

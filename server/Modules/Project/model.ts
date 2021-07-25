@@ -23,27 +23,27 @@ const createProject = async (name: string, code: string): Promise<IModel> => {
   const {rows} = data
 
   if(rows.length) {
-    return {status: 400, data: {rows : 'project code already exist'}}
+    return {statusCode: 400, data: {rows : 'project code already exist'}}
   }  
-  return {status: 200, data: await DBConnection.query(sqlCreateProject, [name, code])}
+  return {statusCode: 200, data: await DBConnection.query(sqlCreateProject, [name, code])}
 }
 
 const readAllProjects = async (): Promise<IModel> => {
   const data : IProjectModule = await DBConnection.query(sqlSelectProjectList)
-  return {status: 200, data}
+  return {statusCode: 200, data}
 }
 
 const updateProject = async (name: string, code: string, id: string): Promise<IModel> => {
-  return {status: 200, data: await DBConnection.query(sqlUpdateProject, [name, code, id])}
+  return {statusCode: 200, data: await DBConnection.query(sqlUpdateProject, [name, code, id])}
 }
 
 const removeProject = async (id: string): Promise<IModel> => {
-  return {status: 200, data: await DBConnection.query(sqlDeleteProject, [id])}
+  return {statusCode: 200, data: await DBConnection.query(sqlDeleteProject, [id])}
 }
 
 
 const readProjectById = async (id: string): Promise<IModel> => {
-  return {status: 200, data: await DBConnection.query(sqlSelectProjectById(id))}
+  return {statusCode: 200, data: await DBConnection.query(sqlSelectProjectById(id))}
 }
 
 export {

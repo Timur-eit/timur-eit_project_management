@@ -20,6 +20,6 @@ export interface IDataModel {
 }
 
 export interface IModel {
-    status: number,
+    statusCode: number,
     data: IDataModel
 }
