@@ -2,17 +2,24 @@ import {IDataModel, IDBQueryConfig, IModel} from '../interfaces'
 import DBConnection from '../../database'
 
 const sqlCreateTask: IDBQueryConfig = {
-    text: `INSERT INTO task (name, description, status, type, project_id) 
+    text: `INSERT INTO tasks (name, description, status, type, project_id) 
         VALUES ($1::text, $2::text, $3::text, $4::text, $5::integer) 
         RETURNING id::integer, name::text, description::text, status::text, type::text, project_id::integer`
-    // ? как автоматизировать получение project_id ?
 }
 
-const sqlSelectTaskByNameAndProjectId = (name: string, project_id: string): IDBQueryConfig => ({text: `SELECT * FROM tasks WHERE name = ${name} AND project_id = ${project_id}`})
+const sqlSelectTaskByNameAndProjectId: IDBQueryConfig = {
+    text: 'SELECT * FROM tasks WHERE name = $1 AND project_id = $2'
+}
 
-const sqlSelectTaskListByProjectId = (project_id: string): IDBQueryConfig => ({text: `SELECT * FROM tasks WHERE project_id = ${project_id}`})
+const sqlSelectTaskListByProjectId: IDBQueryConfig = {
+    text: 'SELECT * FROM tasks WHERE project_id = $1'
+}
 
-const sqlSelectTaskList = (): IDBQueryConfig => ({text: `SELECT * FROM tasks`})
+const sqlSelectProjectByProjectId: IDBQueryConfig = {
+    text: 'SELECT id FROM projects WHERE id = $1'
+}
+
+const sqlSelectAllTasks: IDBQueryConfig = {text: `SELECT * FROM tasks`}
 
 const sqlUpdateTask: IDBQueryConfig = {
     text: 'UPDATE tasks SET name = $1, description = $2, status = $3, type = $4 WHERE id = $5'
@@ -40,23 +47,32 @@ const createTask = async (
     description: string,
     project_id: string
 ): Promise<IModel> => {
-    const data: ITaskModule = await DBConnection.query(sqlSelectTaskByNameAndProjectId(name, project_id), [name, project_id])
-    console.log(data)
-    const {rows} = data
-    if (rows.length) {
+    const taskData: ITaskModule = await DBConnection.query(sqlSelectTaskByNameAndProjectId, [name, project_id])
+    const projectData: ITaskModule = await DBConnection.query(sqlSelectProjectByProjectId, [project_id])
+    
+    const task = taskData.rows
+    const project = projectData.rows
+    if (task.length) {
         return {statusCode: 400, data: {rows: 'task name already exists in this project'}}
+    } else if (project.length === 0) {
+        return {statusCode: 400, data: {rows: 'this project_id doesn\'t exist'}}
+    } else {
+        return {statusCode: 200, data: await DBConnection.query(sqlCreateTask, [name, status, type, description, project_id])}
     }
-    console.log(data)
-    return {statusCode: 200, data: await DBConnection.query(sqlCreateTask, [name, status, type, description, project_id])}
 }
 
 const readAllTasksByProjectId = async (project_id: string): Promise<IModel> => {
-    const data: ITaskModule = await DBConnection.query(sqlSelectTaskListByProjectId(project_id))
-    return {statusCode: 200, data}
+    const projectData: ITaskModule = await DBConnection.query(sqlSelectProjectByProjectId, [project_id])
+    const { rows } = projectData    
+    if (rows.length === 0) {
+        return {statusCode: 400, data: {rows: 'this project_id doesn\'t exist'}}
+    }    
+    const taskData: ITaskModule = await DBConnection.query(sqlSelectTaskListByProjectId, [project_id])
+    return {statusCode: 200, data: taskData}
 }
 
 const readAllTasks = async (): Promise<IModel> => {
-    const data: ITaskModule = await DBConnection.query(sqlSelectTaskList())
+    const data: ITaskModule = await DBConnection.query(sqlSelectAllTasks)
     return {statusCode: 200, data}
 }
 
