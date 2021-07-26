@@ -1,5 +1,5 @@
 import * as express from 'express'
-import {createTask, readAllTasksByProjectId} from './model'
+import {createTask, readAllTasksByProjectId, readAllTasks} from './model'
 
 interface ITaskBody {
     id: string,
@@ -27,8 +27,14 @@ const getTasksByProject: TaskController = async (req, res) => {
     res.status(statusCode).send(rows) // controller
 }
 
+const getAllTasks: TaskController = async (_, res) => {
+    const {statusCode, data: {rows}} = await readAllTasks() // model
+    res.status(statusCode).send(rows)
+}
+
 
 export {
     taskCreate,
-    getTasksByProject
+    getTasksByProject,
+    getAllTasks
 }

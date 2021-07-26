@@ -22,8 +22,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express = __importStar(require("express"));
 const controller_1 = require("./controller");
 const router = express.Router();
-router.post('/:project_id/task', controller_1.taskCreate);
+router.post('/:project_id/tasks', controller_1.taskCreate);
 router.get('/:project_id/tasks', controller_1.getTasksByProject);
+router.get('/', controller_1.getAllTasks);
 // router.get(path.id, getProject)
 // router.put(path.root, projectUpdate)
 // router.delete(path.root, projectDelete)

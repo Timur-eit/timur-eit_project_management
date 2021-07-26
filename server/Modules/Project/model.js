@@ -43,6 +43,11 @@ const removeProject = (id) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.removeProject = removeProject;
 const readProjectById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = yield database_1.default.query(sqlSelectProjectById(id));
+    const { rows } = data;
+    if (rows.length === 0) {
+        return { statusCode: 400, data: { rows: 'this project doesn\'t exist' } };
+    }
     return { statusCode: 200, data: yield database_1.default.query(sqlSelectProjectById(id)) };
 });
 exports.readProjectById = readProjectById;
