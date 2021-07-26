@@ -1,20 +1,14 @@
 {
   "cSpell.ignoreWords": [
-    "'t",
     "allow",
     "blablabla",
     "crud",
-    "doesn",
-    "doesn\\'t",
-    "exist",
     "express",
     "instead",
     "js",
     "module",
     "module's",
     "postgres",
-    "project",
-    "returning",
-    "this"
+    "returning"
   ]
 }

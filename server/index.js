@@ -12,14 +12,15 @@ const express_1 = __importDefault(require("express"));
 const constants_1 = __importDefault(require("./constants"));
 const router_1 = __importDefault(require("./Modules/Project/router"));
 const router_2 = __importDefault(require("./Modules/Task/router"));
+const router_3 = __importDefault(require("./Modules/Tasks/router"));
 const app = express_1.default();
 app.use(express_1.default.urlencoded({
     extended: true
 }));
 app.use(express_1.default.json());
 app.use('/projects', router_1.default);
-app.use('/projects', router_2.default);
-app.use('/tasks', router_2.default);
+app.use('/project', router_2.default);
+app.use('/tasks', router_3.default);
 app.listen(constants_1.default.port, () => {
     const date = new Date();
     console.log(`Server has been loaded on ${constants_1.default.port} port at ${date}`);

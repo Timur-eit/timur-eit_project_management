@@ -18,12 +18,24 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = __importStar(require("express"));
-const controller_1 = require("./controller");
+const model_1 = require("../Task/model");
 const router = express.Router();
-router.post('/:project_id/task', controller_1.taskCreate);
-router.get('/:project_id/tasks', controller_1.getTasksByProject);
+router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { statusCode, data: { rows } } = yield model_1.readAllTasks(); // model
+    res.status(statusCode).send(rows);
+}));
+// router.get(path.root, projectList)
 // router.get(path.id, getProject)
 // router.put(path.root, projectUpdate)
 // router.delete(path.root, projectDelete)

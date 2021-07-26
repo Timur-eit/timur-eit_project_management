@@ -43,11 +43,6 @@ const removeProject = async (id: string): Promise<IModel> => {
 
 
 const readProjectById = async (id: string): Promise<IModel> => {
-  const data : IProjectModule = await DBConnection.query(sqlSelectProjectById(id))
-  const { rows } = data
-  if (rows.length === 0) {
-    return {statusCode: 400, data: {rows: 'this project doesn\'t exist'}}  
-  }  
   return {statusCode: 200, data: await DBConnection.query(sqlSelectProjectById(id))}
 }
 
