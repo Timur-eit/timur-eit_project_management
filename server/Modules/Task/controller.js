@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllTasks = exports.getTasksByProject = exports.taskCreate = void 0;
+exports.taskUpdate = exports.getTaskById = exports.getAllTasks = exports.getTasksByProject = exports.taskCreate = void 0;
 const model_1 = require("./model");
 const taskCreate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const reqBody = req.body;
@@ -31,4 +31,19 @@ const getAllTasks = (_, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.status(statusCode).send(rows);
 });
 exports.getAllTasks = getAllTasks;
+const getTaskById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { params: { id, project_id } } = req;
+    const { statusCode, data: { rows } } = yield model_1.readTaskById(id, project_id); // model
+    res.status(statusCode).send(rows);
+});
+exports.getTaskById = getTaskById;
+const taskUpdate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const reqBody = req.body;
+    const { params: { id, project_id } } = req;
+    // const {name, status, type, description} = reqBody // controller    
+    const { body: { name, status, type, description } } = req;
+    const { statusCode, data: { rows } } = yield model_1.updateTask(id, name, status, type, description, project_id);
+    res.status(statusCode).send(rows);
+});
+exports.taskUpdate = taskUpdate;
 //# sourceMappingURL=controller.js.map

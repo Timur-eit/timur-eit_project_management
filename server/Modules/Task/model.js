@@ -12,11 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.removeItem = exports.updateTask = exports.readAllTasksByProjectId = exports.readAllTasks = exports.createTask = void 0;
+exports.removeItem = exports.updateTask = exports.readTaskById = exports.readAllTasksByProjectId = exports.readAllTasks = exports.createTask = void 0;
 const database_1 = __importDefault(require("../../database"));
 const sqlCreateTask = {
-    text: `INSERT INTO tasks (name, description, status, type, project_id) 
-        VALUES ($1::text, $2::text, $3::text, $4::text, $5::integer) 
+    text: `INSERT INTO tasks (name, description, status, type, project_id)
+        VALUES ($1::text, $2::text, $3::text, $4::text, $5::integer)
         RETURNING id::integer, name::text, description::text, status::text, type::text, project_id::integer`
 };
 const sqlSelectTaskByNameAndProjectId = {
@@ -27,6 +27,9 @@ const sqlSelectTaskListByProjectId = {
 };
 const sqlSelectProjectByProjectId = {
     text: 'SELECT id FROM projects WHERE id = $1'
+};
+const sqlSelectTaskListById = {
+    text: 'SELECT * FROM tasks WHERE id = $1'
 };
 const sqlSelectAllTasks = { text: `SELECT * FROM tasks` };
 const sqlUpdateTask = {
@@ -64,8 +67,36 @@ const readAllTasks = () => __awaiter(void 0, void 0, void 0, function* () {
     return { statusCode: 200, data };
 });
 exports.readAllTasks = readAllTasks;
-const updateTask = (name, description, status, type, id) => __awaiter(void 0, void 0, void 0, function* () {
-    return { statusCode: 200, data: yield database_1.default.query(sqlUpdateTask, [name, description, status, type, id]) };
+const readTaskById = (id, project_id) => __awaiter(void 0, void 0, void 0, function* () {
+    const projectData = yield database_1.default.query(sqlSelectProjectByProjectId, [project_id]);
+    const taskData = yield database_1.default.query(sqlSelectTaskListById, [id]);
+    const project = projectData.rows;
+    const task = taskData.rows;
+    if (project.length === 0) {
+        return { statusCode: 400, data: { rows: 'this project_id doesn\'t exist' } };
+    }
+    else if (task.length === 0) {
+        return { statusCode: 400, data: { rows: 'this task id doesn\'t exist' } };
+    }
+    else {
+        return { statusCode: 200, data: taskData };
+    }
+});
+exports.readTaskById = readTaskById;
+const updateTask = (id, name, description, status, type, project_id) => __awaiter(void 0, void 0, void 0, function* () {
+    const taskData = yield database_1.default.query(sqlSelectTaskByNameAndProjectId, [name, project_id]);
+    const projectData = yield database_1.default.query(sqlSelectProjectByProjectId, [project_id]);
+    const task = taskData.rows;
+    const project = projectData.rows;
+    if (task.length === 0) {
+        return { statusCode: 400, data: { rows: 'task with these name and project_id don\'t exist' } };
+    }
+    else if (project.length === 0) {
+        return { statusCode: 400, data: { rows: 'this project_id doesn\'t exist' } };
+    }
+    else {
+        return { statusCode: 200, data: yield database_1.default.query(sqlUpdateTask, [name, status, type, description]) };
+    }
 });
 exports.updateTask = updateTask;
 const removeItem = (id) => __awaiter(void 0, void 0, void 0, function* () {
