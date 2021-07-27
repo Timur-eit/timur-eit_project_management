@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.taskUpdate = exports.getTaskById = exports.getAllTasks = exports.getTasksByProject = exports.taskCreate = void 0;
+exports.taskDelete = exports.taskUpdate = exports.getTaskById = exports.getAllTasks = exports.getTasksByProject = exports.taskCreate = void 0;
 const model_1 = require("./model");
 const taskCreate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const reqBody = req.body;
@@ -38,12 +38,17 @@ const getTaskById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.getTaskById = getTaskById;
 const taskUpdate = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const reqBody = req.body;
+    // const reqBody: ITaskBody = req.body
     const { params: { id, project_id } } = req;
-    // const {name, status, type, description} = reqBody // controller    
     const { body: { name, status, type, description } } = req;
     const { statusCode, data: { rows } } = yield model_1.updateTask(id, name, status, type, description, project_id);
     res.status(statusCode).send(rows);
 });
 exports.taskUpdate = taskUpdate;
+const taskDelete = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { params: { id, project_id } } = req;
+    const { statusCode } = yield model_1.removeItem(id, project_id);
+    res.status(statusCode).send("success");
+});
+exports.taskDelete = taskDelete;
 //# sourceMappingURL=controller.js.map

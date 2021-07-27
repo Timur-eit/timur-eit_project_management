@@ -25,10 +25,8 @@ const router = express.Router();
 router.get('/', controller_1.getAllTasks);
 router.post('/:project_id/tasks', controller_1.taskCreate);
 router.get('/:project_id/tasks', controller_1.getTasksByProject);
-router.put('/:project_id/tasks', controller_1.taskUpdate);
+router.put('/:project_id/tasks/:id', controller_1.taskUpdate);
 router.get('/:project_id/tasks/:id', controller_1.getTaskById);
-// router.get(path.id, getProject)
-// router.put(path.root, projectUpdate)
-// router.delete(path.root, projectDelete)
+router.delete('/:project_id/tasks/:id', controller_1.taskDelete);
 exports.default = router;
 //# sourceMappingURL=router.js.map

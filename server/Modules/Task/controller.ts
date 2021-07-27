@@ -1,5 +1,12 @@
 import * as express from 'express'
-import {createTask, readAllTasksByProjectId, readAllTasks, readTaskById, updateTask} from './model'
+import {
+    createTask,
+    readAllTasksByProjectId,
+    readAllTasks,
+    readTaskById,
+    updateTask,
+    removeItem
+} from './model'
 
 interface ITaskBody {
     id: string,
@@ -39,14 +46,19 @@ const getTaskById: TaskController = async (req, res) => {
 }
 
 const taskUpdate: TaskController = async (req, res) => {
-    const reqBody: ITaskBody = req.body
+    // const reqBody: ITaskBody = req.body
     const {params: {id, project_id}}: {params : any } = req
-    // const {name, status, type, description} = reqBody // controller    
-    
     const {body: {name, status, type, description}}: {body : ITaskBody} = req
     const {statusCode, data: {rows}} = await updateTask(id, name, status, type, description, project_id)
     res.status(statusCode).send(rows)
 }
+
+const taskDelete: TaskController = async (req, res) => {
+    const {params: {id, project_id}}: {params : any } = req    
+    const {statusCode} = await removeItem(id, project_id)
+    res.status(statusCode).send("success")
+}
+  
 
 
 export {
@@ -55,4 +67,5 @@ export {
     getAllTasks,
     getTaskById,
     taskUpdate,
+    taskDelete
 }
