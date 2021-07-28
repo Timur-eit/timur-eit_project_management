@@ -23,7 +23,6 @@ const taskCreate: TaskController = async (req, res) => {
     const reqBody: ITaskBody = req.body
     const {params: {project_id}}: {params : any } = req
     const {name, status, type, description} = reqBody // controller
-    console.log(name, status, type, description, project_id)
     const {statusCode, data: {rows}} = await createTask(name, status, type, description, project_id) // model
     res.status(statusCode).send(rows) // controller
 }

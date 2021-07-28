@@ -6,7 +6,7 @@
 import express from 'express'
 import constants from './constants'
 import projectRouter from './Modules/Project/router'
-import taskRouter from './Modules/Task/router'
+import taskRouter, {getAllTasksRouter} from './Modules/Task/router'
 
 const app: express.Application = express()
 
@@ -18,7 +18,8 @@ app.use(express.json())
 
 app.use('/projects', projectRouter)
 app.use('/projects', taskRouter)
-app.use('/tasks', taskRouter)
+app.use('/tasks', getAllTasksRouter)
+
 
 app.listen(constants.port, () => {
   const date = new Date()

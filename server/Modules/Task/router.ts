@@ -9,12 +9,20 @@ import {
 } from './controller'
 
 const router = express.Router()
+const getAllTasksRouter = express.Router()
 
-router.get('/', getAllTasks)
+router.use((req,res, next) => {
+    console.log(req)
+    next()
+})
+
+getAllTasksRouter.get('/', getAllTasks)
 router.post('/:project_id/tasks', taskCreate)
 router.get('/:project_id/tasks', getTasksByProject)
 router.put('/:project_id/tasks/:id', taskUpdate)
 router.get('/:project_id/tasks/:id', getTaskById)
 router.delete('/:project_id/tasks/:id', taskDelete)
 
+
+export {getAllTasksRouter}
 export default router
