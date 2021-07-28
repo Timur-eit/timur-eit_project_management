@@ -5,7 +5,7 @@
       "dom",
       "dom.iterable",
       "esnext"
-    ],
+    ],    
     "rootDir": "src",
     "outDir": "build",
     "allowJs": true,
@@ -26,6 +26,7 @@
     "src"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "build"
   ]
 }

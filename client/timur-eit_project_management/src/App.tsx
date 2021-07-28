@@ -3,6 +3,9 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  
+  const content: string = 'Learn React'
+  
   return (
     <div className="App">
       <header className="App-header">
@@ -16,7 +19,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          {content}
         </a>
       </header>
     </div>
