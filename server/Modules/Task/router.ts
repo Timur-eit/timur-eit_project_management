@@ -11,8 +11,7 @@ import {
 const router = express.Router()
 const getAllTasksRouter = express.Router()
 
-router.use((req,res, next) => {
-    console.log(req)
+router.use((_req, _res, next) => {
     next()
 })
 
