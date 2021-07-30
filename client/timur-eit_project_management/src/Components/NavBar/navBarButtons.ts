@@ -8,7 +8,7 @@ export interface INavBarButtons {
 export const navBarButtons: INavBarButtons = {
     projects: {
         name: 'Проекты',
-        path: '/'
+        path: '/projects'
     },
     tasks: {
         name: 'Задачи',

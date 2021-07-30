@@ -1,23 +1,46 @@
 import {Link} from 'react-router-dom'
-import React from 'react';
-import {navBarButtons} from './navBarButtons'
-
-interface Props {
-    [property: string]: string
+import React, {useState} from 'react';
+import {INavBarButtons} from './navBarButtons'
+import './style.scss'
+import classNames from 'classnames'
+interface NavBarProps {
+    [property: string]: INavBarButtons
 }
 
-const NavBar: React.FC<Props> = () => {
-    const navBarTitles = Object.keys(navBarButtons)
-    
+interface IitemBarClassCondition {
+    [property: string]: boolean
+}
+
+const NavBar: React.FC<NavBarProps> = ({ navBarData }) => {
+    const [currentItemPath, setClickedItem] = useState<string>('')
+    const currentItemHandler = (itemPath: string): void => {
+        setClickedItem((): string => itemPath)
+    }
+
+    const navBarTitles: Array<string> = Object.keys(navBarData)
     return (
-        <menu>  
-            {navBarTitles.map(item => {
-                return <Link to={navBarButtons[item].path}>
-                    {navBarButtons[item].name}
-                </Link>
-            })}        
+        <menu className='pm-navbar'>
+            {navBarTitles.map((item): React.ReactElement<'a'> => {
+                const itemName: string = navBarData[item].name
+                const itemPath: string = navBarData[item].path
+                const itemClassCondition: IitemBarClassCondition = {
+                    'highlighted': currentItemPath === itemPath,
+                }
+                const navBarItemClass: string = classNames(itemClassCondition)
+                return (
+                    <Link
+                        key={item}
+                        to={itemPath}
+                        onClick={() => currentItemHandler(itemPath) }
+                        className={navBarItemClass}
+
+                    >
+                        {itemName}
+                    </Link>
+                )
+            })}
         </menu>
-    )   
+    )
 }
 
 export default NavBar
