@@ -7,6 +7,8 @@ import {
 import NavBar from 'Components/NavBar'
 import Projects from 'Components/Projects'
 import {navBarButtons} from 'Components/NavBar/navBarButtons'
+// import Modal from 'Components/Modal_custom'
+import SimpleModal from 'Components/Modal'
 
 interface Props {
   property?: any
@@ -25,6 +27,12 @@ const App: React.FC<Props> = () => {
         <Route path="/projects/:project_id/tasks">Tasks by project</Route>
         <Route path="*">Not found...</Route>
       </Switch>
+
+      {/* <Modal
+          // disableEnforceFocus={true}
+          children={<div>Hello Moto</div>}
+      /> */}
+      <SimpleModal />
     </div>
   );
 }
