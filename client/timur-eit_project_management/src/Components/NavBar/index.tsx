@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom'
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {INavBarButtons} from './navBarButtons'
 import './style.scss'
 import classNames from 'classnames'
@@ -12,12 +12,13 @@ interface IitemBarClassCondition {
 }
 
 const NavBar: React.FC<NavBarProps> = ({ navBarData }) => {
+    
     const [currentItemPath, setClickedItem] = useState<string>('')
     const currentItemHandler = (itemPath: string): void => {
         setClickedItem((): string => itemPath)
     }
-
-    const navBarTitles: Array<string> = Object.keys(navBarData)
+    const navBarTitles: Array<string> = useMemo(() => Object.keys(navBarData), [navBarData]) 
+    
     return (
         <menu className='pm-navbar'>
             {navBarTitles.map((item): React.ReactElement<'a'> => {

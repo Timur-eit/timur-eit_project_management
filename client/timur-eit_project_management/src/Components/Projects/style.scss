@@ -1,0 +1,41 @@
+.projects-list {    
+    
+    .project:first-of-type {
+        border-top: 2px solid black;
+        border-left: 2px solid black;
+        border-right: 2px solid black;        
+    }
+
+    .project {
+        padding: 1em;        
+        border-left: 2px solid black;
+        border-right: 2px solid black;
+        border-bottom: 2px solid black;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+
+
+    .project_task-button {
+        border-left: 1px solid black; 
+        border-top: 1px solid black; 
+        border-bottom: 1px solid black;
+        height: 2em;
+        position: relative;
+        
+        > div {
+            height: 1.45em;
+            width: 1.45em;
+            position: absolute;
+            border-right: 1px solid black;
+            border-bottom: 1px solid black;
+            top: 13%;
+            left: 78%;
+            transform: rotate(-45deg);
+
+        }
+    }
+}
+
