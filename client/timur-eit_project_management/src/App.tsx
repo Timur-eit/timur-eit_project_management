@@ -8,7 +8,6 @@ import NavBar from 'Components/NavBar'
 import Projects from 'Components/Projects'
 import {navBarButtons} from 'Components/NavBar/navBarButtons'
 import Modal from 'Components/Modal_custom'
-//import SimpleModal from 'Components/Modal'
 
 interface Props {
   property?: any
@@ -32,7 +31,6 @@ const App: React.FC<Props> = () => {
           defaultOpen={false}
           children={<div>Hello Moto</div>}
       />
-      {/*<SimpleModal />*/}
     </div>
   );
 }
