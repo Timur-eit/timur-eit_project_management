@@ -11,8 +11,15 @@ const Projects: React.FC<Props> = (props) => {
     const {
         title,
         projectList,        
-        fetchProjectList
+        fetchProjectList,
+        addProjectList
     } = props
+
+
+    const newProject = {
+        'name': 'New PROJECT',
+        'code': 'ZAQ'
+    }
 
     console.log(projectList)
 
@@ -22,6 +29,7 @@ const Projects: React.FC<Props> = (props) => {
     return (
         <div className='projects-container'>
             <button onClick={() => fetchProjectList()}>Get all projects</button>
+            <button onClick={() => addProjectList(newProject)}>Add new project</button>
             <h1>
                 {title}
             </h1>

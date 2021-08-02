@@ -3,6 +3,7 @@ import {IStore} from '../redux/reducer'
 import {ThunkAction} from "redux-thunk";
 import {AnyAction} from "redux";
 import axios from 'axios'
+import qs from 'qs';
 
 export const moduleName: string = 'project'
 
@@ -70,17 +71,11 @@ export const fetchProjectList = (): ThunkAction<void, IStore, unknown, AnyAction
 }
 
 export const addProjectList = (newProject: IProject): ThunkAction<void, IStore, unknown, AnyAction> => async (dispatch, getState) => {
-    const projectList = projectListSelector(getState()) // getState()[moduleName].projectList
-
-
-    // interface IConfig {
-    //     method?: string,
-    //     url?: string,
-    //     headers: {
-    //         'Content-Type': string
-    //     },
-    //     data: IProject
-    // }
+    const projectList = projectListSelector(getState()) // getState()[moduleName].projectList    
+    
+    
+    const dataToSend = qs.stringify(newProject)
+    console.log(dataToSend)
 
     const config: any = {
         method: 'post',
@@ -88,10 +83,10 @@ export const addProjectList = (newProject: IProject): ThunkAction<void, IStore, 
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        data : newProject
+        data : dataToSend
     }
 
-    const data = await axios(config)
+    const data = await axios(config)    
 
     dispatch({
         type: ADD_NEW_PROJECT,
