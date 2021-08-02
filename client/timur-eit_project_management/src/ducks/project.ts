@@ -1,7 +1,7 @@
 import {createSelector} from "reselect";
 import {IStore} from '../redux/reducer'
 import {ThunkAction} from "redux-thunk";
-import {AnyAction } from "redux";
+import {AnyAction} from "redux";
 import axios from 'axios'
 
 export const moduleName: string = 'project'
@@ -61,7 +61,7 @@ export const isLoaderSelector = createSelector(stateSelector, state => state.isL
 
 
 export const fetchProjectList = (): ThunkAction<void, IStore, unknown, AnyAction> => async (dispatch): Promise<void> => {
-    const data: IProject[]  = await axios.get('http://localhost:8000/projects')
+    const { data } : {data: IProject[] } = await axios.get('http://localhost:8000/projects')
 
     dispatch({
         type: GET_PROJECT_LIST,

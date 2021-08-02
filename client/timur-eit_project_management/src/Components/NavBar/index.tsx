@@ -4,12 +4,11 @@ import {INavBarButtons} from './navBarButtons'
 import './style.scss'
 
 interface NavBarProps {
-    [property: string]: INavBarButtons
+    [property: string]: INavBarButtons,
 }
 
 const NavBar: React.FC<NavBarProps> = ({ navBarData }) => {
-    const navBarTitles: Array<string> = useMemo(() => Object.keys(navBarData), [navBarData]) 
-    
+    const navBarTitles: Array<string> = useMemo(() => Object.keys(navBarData), [navBarData])
     return (
         <menu className='pm-navbar'>
             {navBarTitles.map((item): React.ReactElement<NavLink> => {

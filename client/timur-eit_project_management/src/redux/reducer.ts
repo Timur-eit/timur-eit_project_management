@@ -5,4 +5,8 @@ export interface IStore {
     [projectModule: string]: IProjectRecord
 }
 
+declare module 'react-redux' {
+    interface DefaultRootState extends IStore {}
+}
+
 export default combineReducers({[projectModule] : projectReducer})
