@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDom from 'react-dom';
-import './style.css'
+import './style.scss'
 
 interface ModalProps {
     children: any,
@@ -35,7 +35,7 @@ function Modal(props: ModalProps) {
            <div className='modal' onClick={(event) => {
               event.stopPropagation()
             }}>
-            <button onClick={() => setOpen(!isOpen)}>X</button>
+            <div className='delete-product-button' onClick={() => setOpen(!isOpen)}></div>
             {children}
           </div>
         </div>, element

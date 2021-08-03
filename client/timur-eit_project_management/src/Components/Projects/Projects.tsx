@@ -1,53 +1,60 @@
-import React, { useMemo } from 'react'
-import {projects} from './projectHardCode'
 import './style.scss'
-
+import Modal from 'Components/Modal_custom'
+import {NewProject, newProjectFormData} from './NewProject'
 interface Props {
     [property: string]: any
+}
+
+interface IProject {
+    id: number,
+    name: string,
+    code: string
 }
 
 const Projects: React.FC<Props> = (props) => {
 
     const {
         title,
-        projectList,        
+        projectList,
         fetchProjectList,
         addProjectList
     } = props
 
-
+    // hard code for testing
     const newProject = {
         'name': 'New PROJECT',
-        'code': 'ZAQ'
+        'code': 'FGH'
     }
 
     console.log(projectList)
-
-    const projectsData = useMemo(() => projects, [])
-    const projectsIds: Array<string> = useMemo(() => Object.keys(projectsData), [projectsData])
 
     return (
         <div className='projects-container'>
             <button onClick={() => fetchProjectList()}>Get all projects</button>
             <button onClick={() => addProjectList(newProject)}>Add new project</button>
+            <Modal
+                defaultOpen={false}
+                children={
+                    <NewProject
+                        title='Новый Проект'
+                        formData={newProjectFormData}
+                    />
+                }
+            />
             <h1>
                 {title}
             </h1>
             <div className='projects-list'>
-                {projectsIds.map((item): React.ReactElement<'div'> => {
-                    const projectId: string = item
-                    const projectName: string = projectsData[item].name
-                    const projectCode: string = projectsData[item].code
-
+                {projectList && projectList.map((item: IProject): React.ReactElement<'div'> => {
 
                     return (
-                        <div className='project' key={projectId}>
+                        <div className='project' key={item.id}>
                             <div className='project_title'>
-                                <span>{projectName}</span>
-                                <span>{projectId}</span>
+                                <span>{item.name}</span>
+                                <span>{item.id}</span>
                             </div>
                             <div className='project_code'>
-                                <span>{projectCode}</span>
+                                <span>{item.code}</span>
                             </div>
                             <div className='project_task-button'>
                                 Задачи
@@ -57,13 +64,6 @@ const Projects: React.FC<Props> = (props) => {
                     )
 
                 })}
-            </div>
-
-
-
-
-            <div className='projects'>
-
             </div>
         </div>
     )

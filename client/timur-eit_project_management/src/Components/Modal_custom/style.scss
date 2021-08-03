@@ -1,0 +1,42 @@
+#portal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  .wrap {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .modal {
+      width: 200px;
+      height: 300px;
+      padding: 20px;
+      border: 1px solid #000;
+      border-radius: 5px;   
+      background-color: white;   
+
+      .delete-product-button {
+        width: 20px;
+        height: 20px;
+        background: url(./img/cross_small.svg) no-repeat center;        
+      
+        &:hover {          
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  
+  
+
+
+}
+
+
+

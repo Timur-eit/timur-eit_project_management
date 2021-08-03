@@ -7,7 +7,7 @@ import {
 import NavBar from 'Components/NavBar'
 import Projects from 'Components/Projects'
 import {navBarButtons} from 'Components/NavBar/navBarButtons'
-import Modal from 'Components/Modal_custom'
+
 
 interface Props {
   property?: any
@@ -25,12 +25,7 @@ const App: React.FC<Props> = () => {
         <Route path="/tasks">All Tasks</Route>
         <Route path="/projects/:project_id/tasks">Tasks by project</Route>
         <Route path="*">Not found...</Route>
-      </Switch>
-
-       <Modal
-          defaultOpen={false}
-          children={<div>Hello Moto</div>}
-      />
+      </Switch>       
     </div>
   );
 }

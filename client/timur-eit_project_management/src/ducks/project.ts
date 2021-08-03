@@ -71,11 +71,10 @@ export const fetchProjectList = (): ThunkAction<void, IStore, unknown, AnyAction
 }
 
 export const addProjectList = (newProject: IProject): ThunkAction<void, IStore, unknown, AnyAction> => async (dispatch, getState) => {
-    const projectList = projectListSelector(getState()) // getState()[moduleName].projectList    
-    
-    
+    const projectList = projectListSelector(getState()) // getState()[moduleName].projectList
+
     const dataToSend = qs.stringify(newProject)
-    console.log(dataToSend)
+    // console.log(dataToSend)
 
     const config: any = {
         method: 'post',
@@ -86,7 +85,30 @@ export const addProjectList = (newProject: IProject): ThunkAction<void, IStore, 
         data : dataToSend
     }
 
-    const data = await axios(config)    
+    const data = await axios(config)
+
+    dispatch({
+        type: ADD_NEW_PROJECT,
+        payload: [...projectList, data]
+    })
+}
+
+export const removeProjectList = (newProject: IProject): ThunkAction<void, IStore, unknown, AnyAction> => async (dispatch, getState) => {
+    const projectList = projectListSelector(getState()) // getState()[moduleName].projectList
+
+    const dataToSend = qs.stringify(newProject)
+    // console.log(dataToSend)
+
+    const config: any = {
+        method: 'post',
+        url: 'http://localhost:8000/projects',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data : dataToSend
+    }
+
+    const data = await axios(config)
 
     dispatch({
         type: ADD_NEW_PROJECT,
