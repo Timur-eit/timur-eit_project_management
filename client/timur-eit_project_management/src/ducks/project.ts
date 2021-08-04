@@ -63,7 +63,6 @@ export const isLoaderSelector = createSelector(stateSelector, state => state.isL
 
 export const fetchProjectList = (): ThunkAction<void, IStore, unknown, AnyAction> => async (dispatch): Promise<void> => {
     const { data } : {data: IProject[] } = await axios.get('http://localhost:8000/projects')
-
     dispatch({
         type: GET_PROJECT_LIST,
         payload: data
@@ -72,46 +71,61 @@ export const fetchProjectList = (): ThunkAction<void, IStore, unknown, AnyAction
 
 export const addProjectList = (newProject: IProject): ThunkAction<void, IStore, unknown, AnyAction> => async (dispatch, getState) => {
     const projectList = projectListSelector(getState()) // getState()[moduleName].projectList
-
     const dataToSend = qs.stringify(newProject)
-    // console.log(dataToSend)
-
     const config: any = {
         method: 'post',
-        url: 'http://localhost:8000/projects',
+        url: 'http://localhost:8000/projects/',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         data : dataToSend
     }
-
     const data = await axios(config)
-
     dispatch({
         type: ADD_NEW_PROJECT,
         payload: [...projectList, data]
     })
 }
 
-export const removeProjectList = (newProject: IProject): ThunkAction<void, IStore, unknown, AnyAction> => async (dispatch, getState) => {
+export const updateProjectList = (projectData: IProject): ThunkAction<void, IStore, unknown, AnyAction> => async (dispatch, getState) => {
     const projectList = projectListSelector(getState()) // getState()[moduleName].projectList
-
-    const dataToSend = qs.stringify(newProject)
-    // console.log(dataToSend)
-
+    const dataToSend = qs.stringify(projectData)
     const config: any = {
-        method: 'post',
+        method: 'put',
         url: 'http://localhost:8000/projects',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
         data : dataToSend
     }
-
     const data = await axios(config)
-
     dispatch({
-        type: ADD_NEW_PROJECT,
+        type: UPDATE_PROJECT,
         payload: [...projectList, data]
+    })
+}
+
+export const removeProjectList = (projectData: IProject): ThunkAction<void, IStore, unknown, AnyAction> => async (dispatch, getState) => {
+    const projectList = projectListSelector(getState()) // getState()[moduleName].projectList        
+    const dataToSend = qs.stringify(projectData)     
+    const config: any = {
+        method: 'delete',
+        url: 'http://localhost:8000/projects',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data : dataToSend
+    }
+    axios(config)
+        .then(function (_response) {
+            // console.log(JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+    const newProjectList = [...projectList].filter(item => item.id !== projectData.id)
+    dispatch({
+        type: REMOVE_PROJECT,
+        payload: newProjectList
     })
 }

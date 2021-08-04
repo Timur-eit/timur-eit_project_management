@@ -14,6 +14,12 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
+
+        .project_title {
+            > span {
+                margin-right: 1em;
+            }
+        }
     }
 
 

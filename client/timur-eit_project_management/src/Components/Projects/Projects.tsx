@@ -17,21 +17,27 @@ const Projects: React.FC<Props> = (props) => {
         title,
         projectList,
         fetchProjectList,
-        addProjectList
+        addProjectList,
+        updateProjectList,
+        removeProjectList
     } = props
 
-    // hard code for testing
-    const newProject = {
-        'name': 'New PROJECT',
-        'code': 'FGH'
+    // ! hard code for testing
+    const testProjectData = {
+        'id': 21,
+        // 'name': '',
+        // 'code': '',
     }
+    // ! hard code for testing
 
     console.log(projectList)
 
     return (
         <div className='projects-container'>
             <button onClick={() => fetchProjectList()}>Get all projects</button>
-            <button onClick={() => addProjectList(newProject)}>Add new project</button>
+            <button onClick={() => addProjectList(testProjectData)}>Add new project</button>
+            <button onClick={() => updateProjectList(testProjectData)}>Update Project</button>
+            <button onClick={() => removeProjectList(testProjectData)}>Delete Project</button>
             <Modal
                 defaultOpen={false}
                 children={
@@ -60,6 +66,8 @@ const Projects: React.FC<Props> = (props) => {
                                 Задачи
                                 <div></div>
                             </div>
+                            <button>Редактировать</button>
+                            <button onClick={() => console.log(item.name, item.id)}>Удалить</button>
                         </div>
                     )
 

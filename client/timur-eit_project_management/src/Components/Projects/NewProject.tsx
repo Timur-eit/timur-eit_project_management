@@ -1,6 +1,6 @@
 import React from 'react'
 
-interface IFormData {    
+interface IFormData {
     name: string,
     params?: string
 }
@@ -16,7 +16,7 @@ interface NewProjectProps {
 }
 
 export const NewProject: React.FC<NewProjectProps> = (props) => {
-    
+
     const {
         title,
         formData
@@ -31,7 +31,9 @@ export const NewProject: React.FC<NewProjectProps> = (props) => {
                     return (
                         <label key={item.name}>
                             {item.name}
-                            <input name={item.name} type="text" required />                            
+                            <input name={item.name} type="text" required />
+                            {/* ? название - до 255 символов ? */}
+
                         </label>
                     )
                 })}

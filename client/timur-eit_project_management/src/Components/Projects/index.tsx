@@ -3,12 +3,16 @@ import Projects from './Projects'
 import {
     projectListSelector,
     fetchProjectList,
-    addProjectList
+    addProjectList,
+    updateProjectList,
+    removeProjectList
 } from 'ducks/project'
 
 export default connect(state => ({
     projectList: projectListSelector(state),
 }), {
     fetchProjectList,
-    addProjectList
+    addProjectList,
+    updateProjectList,
+    removeProjectList
 })(Projects)
