@@ -3,7 +3,7 @@ import DBConnection from '../../database'
 
 const sqlCreateProject: IDBQueryConfig = {text: 'INSERT INTO projects (name, code) VALUES ($1::text, $2::text) RETURNING id::integer, name::text, code::text'}
 const sqlSelectProjectList: IDBQueryConfig = {text: 'SELECT * FROM projects'}
-const sqlUpdateProject: IDBQueryConfig = {text: 'UPDATE projects SET name = $1, code = $2 WHERE id = $3'}
+const sqlUpdateProject: IDBQueryConfig = {text: 'UPDATE projects SET name = $1, code = $2 WHERE id = $3 RETURNING *'}
 const sqlDeleteProject: IDBQueryConfig = {text: 'DELETE FROM projects WHERE id = $1'}
 const sqlSelectProjectById = (id: string): IDBQueryConfig => ({text: `SELECT * FROM projects WHERE id = ${id}`})
 const sqlSelectProjectByCode: IDBQueryConfig = {text: 'SELECT * FROM projects WHERE code = $1'}

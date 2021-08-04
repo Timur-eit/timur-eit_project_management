@@ -1,36 +1,44 @@
 import './style.scss'
 import Modal from 'Components/Modal_custom'
-import {NewProject, newProjectFormData} from './NewProject'
-interface Props {
-    [property: string]: any
+import {ProjectForm} from './ProjectForm'
+import {IProject} from '../../ducks/project'
+import {useEffect} from 'react'
+
+interface IProps {
+    title: string,
+    projectList: IProject[],
+    fetchProjectList: any,
+    addProjectList: any,
+    updateProjectList: any,
+    removeProjectList: any
 }
 
-interface IProject {
-    id: number,
-    name: string,
-    code: string
-}
+// interface IProject {
+//     id: number,
+//     name: string,
+//     code: string
+// }
 
-const Projects: React.FC<Props> = (props) => {
-
-    const {
-        title,
-        projectList,
-        fetchProjectList,
-        addProjectList,
-        updateProjectList,
-        removeProjectList
-    } = props
-
+// const Projects: React.FC<Props> = (props) => {
+const Projects: React.FC<IProps> = ({
+                                        title,
+                                        projectList,
+                                        fetchProjectList,
+                                        addProjectList,
+                                        updateProjectList,
+                                        removeProjectList
+                                    }) => {
     // ! hard code for testing
     const testProjectData = {
-        'id': 21,
-        // 'name': '',
-        // 'code': '',
+        // 'id': 21,
+        'name': 'NEW22',
+        'code': 'NEW',
     }
     // ! hard code for testing
 
-    console.log(projectList)
+    useEffect(() => {
+        fetchProjectList()
+    }, [fetchProjectList])
 
     return (
         <div className='projects-container'>
@@ -41,9 +49,9 @@ const Projects: React.FC<Props> = (props) => {
             <Modal
                 defaultOpen={false}
                 children={
-                    <NewProject
+                    <ProjectForm
                         title='Новый Проект'
-                        formData={newProjectFormData}
+                        handleSubmit={addProjectList}
                     />
                 }
             />
@@ -51,10 +59,10 @@ const Projects: React.FC<Props> = (props) => {
                 {title}
             </h1>
             <div className='projects-list'>
-                {projectList && projectList.map((item: IProject): React.ReactElement<'div'> => {
+                {projectList && projectList.map((item: IProject, key): React.ReactElement<'div'> => {
 
                     return (
-                        <div className='project' key={item.id}>
+                        <div className='project' key={`${key}_${item.id}`}>
                             <div className='project_title'>
                                 <span>{item.name}</span>
                                 <span>{item.id}</span>
