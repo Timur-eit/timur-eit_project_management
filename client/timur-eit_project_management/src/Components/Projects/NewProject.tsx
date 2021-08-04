@@ -1,18 +1,18 @@
 import React from 'react'
 
-interface IFormData {
+interface IProjectFormData {
     name: string,
     params?: string
 }
 
-export const newProjectFormData: IFormData[] = [
+export const newProjectFormData: IProjectFormData[] = [
     {name: 'Название'},
     {name: 'Ключ'}
 ]
 
 interface NewProjectProps {
     title: string,
-    formData: IFormData[],
+    formData: IProjectFormData[],
 }
 
 export const NewProject: React.FC<NewProjectProps> = (props) => {

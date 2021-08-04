@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import NavBar from 'Components/NavBar'
 import Projects from 'Components/Projects'
+import Tasks from 'Components/Tasks'
 import {navBarButtons} from 'Components/NavBar/navBarButtons'
 
 
@@ -22,7 +23,9 @@ const App: React.FC<Props> = () => {
         <Route exact path={["/", "/projects"]}>
           <Projects title={'Проекты'} />
         </Route>
-        <Route path="/tasks">All Tasks</Route>
+        <Route path="/tasks">
+          <Tasks title={'Задачи'} />
+        </Route>
         <Route path="/projects/:project_id/tasks">Tasks by project</Route>
         <Route path="*">Not found...</Route>
       </Switch>       
